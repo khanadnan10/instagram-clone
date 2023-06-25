@@ -1,24 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:instagram_clone/pages/signup_screen.dart';
 import 'package:instagram_clone/utils/colors.dart';
 import 'package:instagram_clone/utils/global_variable.dart';
 import 'package:instagram_clone/widgets/text_field_input.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class SignupScreen extends StatefulWidget {
+  const SignupScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<SignupScreen> createState() => _SignupScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _SignupScreenState extends State<SignupScreen> {
+  final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
   @override
   void dispose() {
     _emailController.dispose();
+    _usernameController.dispose();
     _passwordController.dispose();
     super.dispose();
   }
@@ -44,6 +45,11 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               const SizedBox(height: 35.0),
               TextFieldInput(
+                hintText: 'Username',
+                textEditingController: _emailController,
+              ),
+              const SizedBox(height: 15.0),
+              TextFieldInput(
                 hintText: 'Email',
                 textEditingController: _emailController,
               ),
@@ -57,21 +63,6 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               const SizedBox(
                 height: 15.0,
-              ),
-              GestureDetector(
-                onTap: () {
-                  // TODO: Forget password firebase implementation
-                },
-                child: const Align(
-                  alignment: Alignment.bottomRight,
-                  child: Text(
-                    'Forgot Password?',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: blueColor,
-                    ),
-                  ),
-                ),
               ),
               const SizedBox(
                 height: 15.0,
@@ -87,7 +78,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 child: const Text(
-                  'Login',
+                  'Signup',
                 ),
               ),
               const SizedBox(
@@ -101,18 +92,21 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Container(),
               ),
               GestureDetector(
-                onTap: () => nextPage(context, const SignupScreen()),
+                onTap: () => previousPage(context),
                 child: RichText(
-                    text: const TextSpan(children: [
-                  TextSpan(text: "Don't have an account? "),
-                  TextSpan(
-                    text: 'Sign up',
-                    style: TextStyle(
-                      color: blueColor,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  )
-                ],),),
+                  text: const TextSpan(
+                    children: [
+                      TextSpan(text: "Already have an account? "),
+                      TextSpan(
+                        text: 'Log in',
+                        style: TextStyle(
+                          color: blueColor,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ],
           ),
