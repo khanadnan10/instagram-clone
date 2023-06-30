@@ -5,7 +5,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 
 class StorageMethods {
   final FirebaseStorage _firebaseStorage = FirebaseStorage.instance;
-  FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   Future<String> uploadImageToStorage(
       String childName, Uint8List file, bool isPost) async {

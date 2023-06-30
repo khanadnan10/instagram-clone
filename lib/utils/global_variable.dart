@@ -28,5 +28,18 @@ pickImage(ImageSource source) async {
 
   if (_file != null) {
     return _file.readAsBytes();
+  } else {
+    debugPrint('********** File not selected! ***********');
   }
+}
+
+// snackbar
+
+showSnackBar(BuildContext context, String text) {
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(
+      duration: const Duration(milliseconds: 1000),
+      content: Text(text),
+    ),
+  );
 }

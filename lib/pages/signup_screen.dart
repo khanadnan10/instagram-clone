@@ -1,11 +1,17 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:instagram_clone/resources/auth_method.dart';
+import 'package:instagram_clone/responsive/responsive.dart';
 import 'package:instagram_clone/utils/colors.dart';
 import 'package:instagram_clone/utils/global_variable.dart';
 import 'package:instagram_clone/widgets/text_field_input.dart';
+
+import '../responsive/mobileLayout.dart';
+import '../responsive/webLayout.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -38,6 +44,39 @@ class _SignupScreenState extends State<SignupScreen> {
     setState(() {
       _image = pickedImage;
     });
+  }
+
+  bool _isLoading = false;
+
+  void signUpUser() async {
+    setState(() {
+      _isLoading = true;
+    });
+    String res = await AuthMethods().signUp(
+      email: _emailController.text.trim(),
+      password: _passwordController.text.trim(),
+      userName: _usernameController.text.trim(),
+      bio: _bioController.text.trim(),
+      file: _image!,
+    );
+
+    setState(() {
+      _isLoading = false;
+    });
+    if (res != "success") {
+      // showsnackbar of the type of error occured
+      showSnackBar(context, res);
+    } else {
+      showSnackBar(context, res);
+      // Navigate to the login page
+      nextPageReplacement(
+        context,
+        const ResponsiveLayout(
+          MobileLayout: MobileLayout(),
+          WebLayout: WebLayout(),
+        ),
+      );
+    }
   }
 
   @override
@@ -128,14 +167,10 @@ class _SignupScreenState extends State<SignupScreen> {
                 const SizedBox(
                   height: 15.0,
                 ),
-                GestureDetector(
-                  onTap: () => AuthMethods().signUp(
-                    email: _emailController.text.trim(),
-                    password: _passwordController.text.trim(),
-                    userName: _usernameController.text.trim(),
-                    bio: _bioController.text.trim(),
-                    file: _image!,
-                  ),
+                InkWell(
+                  onTap: () => _image != null
+                      ? signUpUser()
+                      : showSnackBar(context, 'Please enter all the field'),
                   child: Container(
                     alignment: Alignment.center,
                     padding: const EdgeInsets.all(15.0),
@@ -146,9 +181,15 @@ class _SignupScreenState extends State<SignupScreen> {
                         borderRadius: BorderRadius.circular(7.0),
                       ),
                     ),
-                    child: const Text(
-                      'Signup',
-                    ),
+                    child: _isLoading
+                        ? const Center(
+                            child: CircularProgressIndicator(
+                              color: primaryColor,
+                            ),
+                          )
+                        : const Text(
+                            'Signup',
+                          ),
                   ),
                 ),
                 const SizedBox(
