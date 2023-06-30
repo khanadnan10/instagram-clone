@@ -2,13 +2,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:instagram_clone/pages/login_screen.dart';
-import 'package:instagram_clone/provider/user_provider.dart';
 import 'package:instagram_clone/responsive/mobileLayout.dart';
 import 'package:instagram_clone/responsive/responsive.dart';
 import 'package:instagram_clone/responsive/webLayout.dart';
 import 'package:instagram_clone/utils/colors.dart';
 import 'package:provider/provider.dart';
 import 'firebase_options.dart';
+import 'provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,6 +27,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => UserProvider()),
+        ChangeNotifierProvider(create: (context) => BottomNavbarProvider()),
       ],
       child: MaterialApp(
           debugShowCheckedModeBanner: false,

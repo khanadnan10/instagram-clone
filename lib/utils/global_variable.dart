@@ -1,6 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
+List<Widget> screens = const [
+  Text('Home'),
+  Text('Search'),
+  Text('Upload'),
+  Text('Notification'),
+  Text('Profile'),
+];
+
 // Dimension of different screen size
 
 const webScreenSize = 600;
@@ -27,9 +35,7 @@ pickImage(ImageSource source) async {
   XFile? _file = await _imagePicker.pickImage(source: source);
 
   if (_file != null) {
-    return _file.readAsBytes();
-  } else {
-    debugPrint('********** File not selected! ***********');
+    return _file.readAsBytes().catchError((e) => debugPrint('Error: $e'));
   }
 }
 
