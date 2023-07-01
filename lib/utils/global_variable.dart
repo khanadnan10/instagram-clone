@@ -1,14 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-List<Widget> screens = const [
-  Text('Home'),
-  Text('Search'),
-  Text('Upload'),
-  Text('Notification'),
-  Text('Profile'),
-];
-
 // Dimension of different screen size
 
 const webScreenSize = 600;
@@ -25,7 +17,7 @@ nextPageReplacement(context, toPage) {
 }
 
 previousPage(context) {
-  Navigator.pop(context);
+  Navigator.of(context).pop();
 }
 
 // Image picker

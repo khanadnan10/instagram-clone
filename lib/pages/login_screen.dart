@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:instagram_clone/pages/home_screen.dart';
 import 'package:instagram_clone/pages/signup_screen.dart';
-import 'package:instagram_clone/resources/auth_method.dart';
+import 'package:instagram_clone/database/auth_method.dart';
 import 'package:instagram_clone/responsive/responsive.dart';
 import 'package:instagram_clone/utils/colors.dart';
 import 'package:instagram_clone/utils/global_variable.dart';

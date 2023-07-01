@@ -1,8 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:instagram_clone/pages/add_post_screen.dart';
+import 'package:instagram_clone/pages/home_screen.dart';
 import 'package:instagram_clone/provider/bottomNavBar_provider.dart';
 import 'package:instagram_clone/utils/utils.dart';
-import 'package:instagram_clone/widgets/add_icon.dart';
+import 'package:instagram_clone/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
 class MobileLayout extends StatefulWidget {
@@ -15,6 +18,13 @@ class MobileLayout extends StatefulWidget {
 class _MobileLayoutState extends State<MobileLayout> {
   @override
   Widget build(BuildContext context) {
+    List<Widget> screens = const [
+      HomeScreen(),
+      Center(child: Text('Search')),
+      AddPostscreen(),
+      Center(child: Text('Reels')),
+      Text('Profile'),
+    ];
     final BottomNavbarProvider bottomNavbarProvider =
         context.watch<BottomNavbarProvider>();
 
@@ -46,8 +56,21 @@ class _MobileLayoutState extends State<MobileLayout> {
                 ),
                 label: '',
               ),
-              const BottomNavigationBarItem(
-                icon: Icon(CupertinoIcons.heart),
+              BottomNavigationBarItem(
+                icon: SvgPicture.asset(
+                  'assets/images/instagram-reels.svg',
+                  height: 27.0,
+                  width: 27.0,
+                  fit: BoxFit.fill,
+                  color: secondaryColor,
+                ),
+                activeIcon: SvgPicture.asset(
+                  'assets/images/instagram-reels-white.svg',
+                  height: 27.0,
+                  width: 27.0,
+                  fit: BoxFit.fill,
+                  color: primaryColor,
+                ),
                 label: '',
               ),
               const BottomNavigationBarItem(
