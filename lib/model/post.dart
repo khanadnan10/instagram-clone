@@ -25,7 +25,7 @@ class Post {
         'uid': uid,
         'username': username,
         'description': description,
-        'postID': postId,
+        'postId': postId,
         'datePublished': datePublished,
         'postUrl': postUrl,
         'profileImage': profileImage,

@@ -106,7 +106,7 @@ class _AddPostscreenState extends State<AddPostscreen> {
 
   @override
   Widget build(BuildContext context) {
-    final User user = Provider.of<UserProvider>(context).getUser;
+    final User? user = Provider.of<UserProvider>(context).getUser;
 
     return _file == null
         ? Scaffold(
@@ -136,7 +136,7 @@ class _AddPostscreenState extends State<AddPostscreen> {
                 TextButton(
                   onPressed: () {
                     _postImage(
-                      user.uid,
+                      user!.uid,
                       user.username,
                       user.photoUrl,
                     );
@@ -168,7 +168,7 @@ class _AddPostscreenState extends State<AddPostscreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     CircleAvatar(
-                      backgroundImage: NetworkImage(user.photoUrl),
+                      backgroundImage: NetworkImage(user!.photoUrl),
                     ),
                     SizedBox(
                       width: MediaQuery.of(context).size.width * 0.4,
