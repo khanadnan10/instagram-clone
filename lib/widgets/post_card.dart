@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:instagram_clone/database/firestore_methods.dart';
 import 'package:instagram_clone/model/user.dart';
 import 'package:instagram_clone/provider/user_provider.dart';
+import 'package:instagram_clone/widgets/bottomSheet.dart';
 import 'package:instagram_clone/widgets/like_animation.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:provider/provider.dart';
@@ -25,34 +26,10 @@ class _PostCardState extends State<PostCard> {
   Widget build(BuildContext context) {
     final Timestamp _time = widget.snap['datePublished'];
     final DateTime _dateTime = DateTime.parse(_time.toDate().toString());
-    final User user = context.read<UserProvider>().getUser;
+    final User? user = context.read<UserProvider>().getUser;
 
     bool isLikeAnimating = false;
 
-    Widget bottomDetailsSheet() {
-      return Scaffold(
-        bottomNavigationBar: const Row(
-          children: [],
-        ),
-        body: DraggableScrollableSheet(
-          initialChildSize: .5,
-          minChildSize: 0.5,
-          maxChildSize: 0.9,
-          builder: (BuildContext context, ScrollController scrollController) {
-            return ListView(
-              controller: scrollController,
-              children: const [
-                ListTile(
-                  title: Text(
-                    "Comments",
-                  ),
-                )
-              ],
-            );
-          },
-        ),
-      );
-    }
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -86,10 +63,10 @@ class _PostCardState extends State<PostCard> {
           ),
         ),
         GestureDetector(
-          onDoubleTap: () {
-            FirestoreMethods().likePost(
+          onDoubleTap: () async {
+            await FirestoreMethods().likePost(
               widget.snap['postId'].toString(),
-              user.uid,
+              user!.uid,
               widget.snap['likes'],
             );
             setState(() {
@@ -109,7 +86,7 @@ class _PostCardState extends State<PostCard> {
               ),
               AnimatedOpacity(
                 duration: const Duration(milliseconds: 200),
-                opacity: isLikeAnimating ? 1 : 0,
+                opacity: isLikeAnimating == true ? 1 : 0,
                 child: LikeAnimation(
                   isAnimating: isLikeAnimating,
                   duration: const Duration(
@@ -133,7 +110,7 @@ class _PostCardState extends State<PostCard> {
         Row(
           children: [
             IconButton(
-                icon: widget.snap['likes'].contains(user.uid)
+                icon: widget.snap['likes'].contains(user!.uid)
                     ? const Icon(
                         Icons.favorite,
                         color: Colors.red,
@@ -151,10 +128,10 @@ class _PostCardState extends State<PostCard> {
             IconButton(
               onPressed: () => showModalBottomSheet(
                 useSafeArea: true,
-                isScrollControlled: true,
+                isScrollControlled: false,
                 backgroundColor: mobileBackgroundColor,
                 context: context,
-                builder: (context) => bottomDetailsSheet(),
+                builder: (context) => BottomSheetModel(),
               ),
               icon: const Icon(
                 Icons.comment,
@@ -219,7 +196,7 @@ class _PostCardState extends State<PostCard> {
                   isScrollControlled: true,
                   backgroundColor: mobileBackgroundColor,
                   context: context,
-                  builder: (context) => bottomDetailsSheet(),
+                  builder: (context) => BottomSheetModel(),
                 ),
                 child: Container(
                   alignment: Alignment.topLeft,
