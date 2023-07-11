@@ -8,7 +8,6 @@ class CommentCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color: Colors.grey,
         padding: const EdgeInsets.symmetric(
           vertical: 18,
           horizontal: 16,

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:instagram_clone/database/firestore_methods.dart';
 import 'package:instagram_clone/model/user.dart';
 import 'package:instagram_clone/provider/user_provider.dart';
-import 'package:instagram_clone/widgets/bottomSheet.dart';
+import 'package:instagram_clone/pages/comment_screen.dart';
 import 'package:instagram_clone/widgets/like_animation.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:provider/provider.dart';
@@ -29,7 +29,6 @@ class _PostCardState extends State<PostCard> {
     final User? user = context.read<UserProvider>().getUser;
 
     bool isLikeAnimating = false;
-
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -126,13 +125,7 @@ class _PostCardState extends State<PostCard> {
                   );
                 }),
             IconButton(
-              onPressed: () => showModalBottomSheet(
-                useSafeArea: true,
-                isScrollControlled: false,
-                backgroundColor: mobileBackgroundColor,
-                context: context,
-                builder: (context) => BottomSheetModel(),
-              ),
+              onPressed: () => nextPage(context, CommentScreen()),
               icon: const Icon(
                 Icons.comment,
               ),
@@ -191,13 +184,7 @@ class _PostCardState extends State<PostCard> {
                 height: 3.0,
               ),
               InkWell(
-                onTap: () => showModalBottomSheet(
-                  useSafeArea: true,
-                  isScrollControlled: true,
-                  backgroundColor: mobileBackgroundColor,
-                  context: context,
-                  builder: (context) => BottomSheetModel(),
-                ),
+                onTap: () => nextPage(context, CommentScreen()),
                 child: Container(
                   alignment: Alignment.topLeft,
                   child: const Text(
